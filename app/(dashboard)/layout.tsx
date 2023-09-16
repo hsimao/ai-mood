@@ -10,7 +10,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
             <UserButton />
           </div>
         </header>
-        {children}
+        <div className="h-[calc(100%-60px)]">{children}</div>
       </div>
     </div>
   )
