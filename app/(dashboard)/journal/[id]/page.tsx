@@ -23,7 +23,7 @@ async function EntryPage({ params }: { params: { id: string } }) {
   if (!entry) return null
 
   return (
-    <div>
+    <div className="h-full w-full">
       <Editor entry={entry} />
     </div>
   )
