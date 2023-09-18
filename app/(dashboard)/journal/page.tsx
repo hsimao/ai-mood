@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
 import { getUserByClerkID } from '@/utils/auth'
@@ -14,6 +15,9 @@ const getEntries = async () => {
     orderBy: {
       createdAt: 'desc',
     },
+    include: {
+      analysis: true,
+    },
   })
 
   return entries
@@ -29,7 +33,9 @@ async function JournalPage() {
         <NewEntryCard />
 
         {entries.map((entry) => (
-          <EntryCard key={entry.id} entry={entry} />
+          <Link href={`/journal/${entry.id}`} key={entry.id}>
+            <EntryCard entry={entry} />
+          </Link>
         ))}
       </div>
     </div>
