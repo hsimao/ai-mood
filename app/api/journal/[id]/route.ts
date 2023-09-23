@@ -25,7 +25,7 @@ export const PATCH = async (
   if (!newAnalysis) return
 
   // use upsert if analysis not yet create will create a new one
-  await prisma.analysis.upsert({
+  const analysis = await prisma.analysis.upsert({
     where: {
       entryId: updatedEntry.id,
     },
@@ -36,5 +36,5 @@ export const PATCH = async (
     update: newAnalysis,
   })
 
-  return NextResponse.json({ data: updatedEntry })
+  return NextResponse.json({ data: { ...updatedEntry, analysis } })
 }

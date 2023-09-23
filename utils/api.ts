@@ -10,8 +10,9 @@ export const createNewEntry = async () => {
   )
 
   if (res.ok) {
-    const data = await res.json()
-    return data.data
+    return res.json()
+  } else {
+    throw new Error('Something went wrong on API server!')
   }
 }
 
@@ -24,7 +25,8 @@ export const updateEntry = async (id: string, content: string) => {
   )
 
   if (res.ok) {
-    const data = await res.json()
-    return data.data
+    return res.json()
+  } else {
+    throw new Error('Something went wrong on API server!')
   }
 }
