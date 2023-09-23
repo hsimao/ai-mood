@@ -3,7 +3,6 @@ import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
 import { getUserByClerkID } from '@/utils/auth'
 import { prisma } from '@/utils/db'
-import { analyze } from '@/utils/ai'
 
 const getEntries = async () => {
   const user = await getUserByClerkID()
@@ -20,11 +19,6 @@ const getEntries = async () => {
       analysis: true,
     },
   })
-
-  const result = await analyze(
-    'Today was a eh, ok day I guess. I found a new coffee shop that was cool but then I got a flat tire.'
-  )
-  console.log('result', result)
 
   return entries
 }
