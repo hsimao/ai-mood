@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Prisma, Analysis } from '@prisma/client'
 import { useAutosave } from 'react-autosave'
 import { updateEntry } from '@/utils/api'
+import Spinner from './Spinner'
 
 type JournalEntryWithAnalysis = Prisma.JournalEntryGetPayload<{
   include: { analysis: true }
@@ -26,6 +27,8 @@ function Editor({ entry }: { entry: JournalEntryWithAnalysis }) {
   useAutosave({
     data: value,
     onSave: async (_value: string) => {
+      if (_value === entry.content) return
+
       setIsLoading(true)
       const { data } = await updateEntry(entry.id, _value)
       setAnalysis(data.analysis)
@@ -34,9 +37,16 @@ function Editor({ entry }: { entry: JournalEntryWithAnalysis }) {
   })
 
   return (
-    <div className="w-full h-full grid grid-cols-3 overflow-x-hidden">
+    <div className="relative w-full h-full grid grid-cols-3 overflow-x-hidden">
+      <div className="absolute left-0 top-0 p-2">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <div className="w-[16px] h-[16px] rounded-full bg-green-500"></div>
+        )}
+      </div>
+
       <div className="col-span-2">
-        {isLoading && <div>...loading</div>}
         <textarea
           className="w-full h-full p-8 text-xl outline-none"
           value={value}
