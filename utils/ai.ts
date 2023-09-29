@@ -7,8 +7,6 @@ import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { MemoryVectorStore } from 'langchain/vectorstores/memory'
 
 import z from 'zod'
-import { JournalEntry } from '@prisma/client'
-import { relative } from 'path'
 
 const parser = StructuredOutputParser.fromZodSchema(
   z.object({
@@ -62,7 +60,13 @@ export const analyze = async (content: string) => {
   }
 }
 
-const qa = async (question: string, entries: JournalEntry[]) => {
+interface QaEntry {
+  id: string
+  createdAt: Date
+  content: string
+}
+
+export const qa = async (question: string, entries: QaEntry[]) => {
   const docs = entries.map((entry) => {
     return new Document({
       pageContent: entry.content,
