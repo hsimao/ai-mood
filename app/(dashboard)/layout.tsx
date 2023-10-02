@@ -4,6 +4,7 @@ import { UserButton } from '@clerk/nextjs'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/journal', label: 'Journal' },
+  { href: '/history', label: 'History' },
 ]
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
